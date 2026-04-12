@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Dot-by-Dot Reveal | Direct MP4 + PNG/JPEG Download</title>
+  <title>DotMatrixAnimator | Dot-by-Dot Pointillism Studio</title>
   <style>
     * {
       box-sizing: border-box;
@@ -32,6 +32,19 @@
       transition: all 0.2s;
     }
 
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 0.5rem;
+    }
+
+    .title-section {
+      flex: 1;
+    }
+
     h1 {
       font-size: 1.9rem;
       font-weight: 700;
@@ -46,9 +59,60 @@
     .sub {
       color: #9aa5ce;
       font-size: 0.9rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       border-left: 3px solid #5f7cff;
       padding-left: 14px;
+    }
+
+    .github-badge {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(8px);
+      padding: 8px 18px;
+      border-radius: 60px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .github-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #cddcff;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.85rem;
+      transition: 0.2s;
+      font-family: monospace;
+    }
+
+    .github-link:hover {
+      color: white;
+      text-shadow: 0 0 6px #5f7cff;
+    }
+
+    .star-btn {
+      background: #2a2f4a;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: #ffdf6c;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: inherit;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+    }
+
+    .star-btn:hover {
+      background: #3e3f6e;
+      transform: scale(0.98);
+      color: #ffea8a;
     }
 
     .flex-main {
@@ -79,6 +143,7 @@
       justify-content: center;
       padding: 1rem;
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03), 0 12px 28px black;
+      position: relative;
     }
 
     canvas {
@@ -207,14 +272,56 @@
       border-color: rgba(255,255,255,0.05);
       margin: 6px 0;
     }
+
+    .report-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 40px;
+      padding: 5px 12px;
+      font-size: 0.7rem;
+      color: #b9c3ec;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    .report-link:hover {
+      background: #2f3557;
+      color: white;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.2rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
   </style>
-  <!-- CCapture.js for MP4 generation (WebM) -->
+  <!-- CCapture.js for MP4 generation (WebM fallback) -->
   <script src="https://cdn.jsdelivr.net/npm/ccapture.js@1.1.0/build/CCapture.min.js"></script>
 </head>
 <body>
 <div class="glass-container">
-  <h1>◉ DOT BY DOT · POINTILLISM STUDIO</h1>
-  <div class="sub">upload image → watch dot-by-dot transition → download as MP4, PNG, or JPEG</div>
+  <div class="header-row">
+    <div class="title-section">
+      <h1>◉ DOT BY DOT · POINTILLISM STUDIO</h1>
+      <div class="sub">upload image → watch dot-by-dot transition → download as MP4, PNG, or JPEG</div>
+    </div>
+    <div class="github-badge">
+      <a href="https://github.com/charlespura/DotMatrixAnimator" target="_blank" class="github-link" rel="noopener noreferrer">
+        <svg height="18" width="18" viewBox="0 0 16 16" fill="currentColor" style="display:inline-block; vertical-align: middle;">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+        </svg>
+        GitHub
+      </a>
+      <button id="starRepoBtn" class="star-btn">⭐ STAR</button>
+    </div>
+  </div>
 
   <div class="flex-main">
     <!-- LEFT CONTROLS -->
@@ -263,6 +370,17 @@
       <div style="margin-top: 12px; font-size: 11px; color:#6f7aaa;">⬇ live preview — organic dot transition</div>
     </div>
   </div>
+
+  <!-- Footer with Report link & repo info -->
+  <div class="footer-links">
+    <a href="https://github.com/charlespura/DotMatrixAnimator/issues/new" target="_blank" class="report-link" rel="noopener noreferrer">
+      📋 Report Issue / Feedback
+    </a>
+    <div style="font-size: 0.7rem; color: #5b6692;">
+      <span>⚡ DotMatrixAnimator v1.0 | </span>
+      <a href="https://github.com/charlespura/DotMatrixAnimator" target="_blank" style="color:#8f9ee0; text-decoration: none;">github.com/charlespura/DotMatrixAnimator</a>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -276,6 +394,7 @@
     const downloadMp4Btn = document.getElementById('downloadMp4Btn');
     const exportPngBtn = document.getElementById('exportPngBtn');
     const exportJpegBtn = document.getElementById('exportJpegBtn');
+    const starRepoBtn = document.getElementById('starRepoBtn');
     
     const dotSizeSlider = document.getElementById('dotSizeSlider');
     const dotSizeVal = document.getElementById('dotSizeVal');
@@ -483,14 +602,12 @@
       reader.readAsDataURL(file);
     }
     
-    // ---------- MP4 generation WITHOUT manual record/stop (one-click download) ----------
+    // ---------- MP4 generation (optimized MediaRecorder + fallback) ----------
     function pickBestVideoMimeType() {
       if (typeof MediaRecorder === 'undefined' || typeof MediaRecorder.isTypeSupported !== 'function') return null;
       const candidates = [
-        // Prefer MP4 when available (mainly Safari)
         'video/mp4;codecs=avc1.42E01E',
         'video/mp4',
-        // Chrome/Firefox
         'video/webm;codecs=vp9',
         'video/webm;codecs=vp8',
         'video/webm'
@@ -508,7 +625,6 @@
     }
 
     function setPendingVideoDownload(url, filename) {
-      // Clean up any previous pending URL
       if (pendingVideoDownload?.url) {
         try { URL.revokeObjectURL(pendingVideoDownload.url); } catch {}
       }
@@ -547,39 +663,29 @@
         return;
       }
 
-      // If a video is already prepared (some mobile browsers block auto-download),
-      // let the user tap again to trigger a user-gesture download.
       if (pendingVideoDownload) {
         tryTriggerDownload(pendingVideoDownload.url, pendingVideoDownload.filename);
         statusDiv.innerHTML = "✅ Download triggered. If your browser opened a new tab, use its Save/Share option.";
-        // Keep the URL around briefly in case the browser ignores `download`
         setTimeout(() => clearPendingVideoDownload(), 8000);
         return;
       }
       clearPendingVideoDownload();
       
-      // stop any ongoing animation to avoid conflicts
       stopAnimation();
       
-      // store current dot grid & revealed state to restore later
       const originalDotGrid = [...dotGrid];
       const originalRevealed = [...revealed];
       const originalRevealOrder = [...revealOrder];
       const originalRevealCount = currentRevealCount;
-      const originalIsAnimating = isAnimating;
       
-      // create a fresh isolated state for recording: start from empty
-      // but we must keep the same dotGrid (colors/positions) and reset reveal
-      dotGrid = buildDotGridFromImageData();  // rebuild (ensures up-to-date step)
+      dotGrid = buildDotGridFromImageData();
       const totalDots = dotGrid.length;
-      // generate fresh random order for organic recording (same as normal experience)
       const freshOrder = Array.from({ length: totalDots }, (_, i) => i);
       for (let i = freshOrder.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [freshOrder[i], freshOrder[j]] = [freshOrder[j], freshOrder[i]];
       }
       
-      // Render initial empty canvas
       ctx.fillStyle = "#03050c";
       ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
       
@@ -589,18 +695,10 @@
       const fps = 30;
       const intervalTime = 1000 / fps;
       const revealedRecording = new Array(totalDots).fill(false);
-      const recordingOrder = [...freshOrder];
       let recordingRevealCount = 0;
 
-      const canUseMediaRecorder =
-        typeof canvas.captureStream === 'function' &&
-        typeof MediaRecorder !== 'undefined';
-
-      let stream = null;
-      let recorder = null;
-      let capturer = null;
-      let chunks = [];
-      let chosenMime = null;
+      const canUseMediaRecorder = typeof canvas.captureStream === 'function' && typeof MediaRecorder !== 'undefined';
+      let stream = null, recorder = null, capturer = null, chunks = [], chosenMime = null;
 
       try {
         if (canUseMediaRecorder) {
@@ -608,47 +706,24 @@
           chosenMime = pickBestVideoMimeType();
           recorder = new MediaRecorder(stream, chosenMime ? { mimeType: chosenMime } : undefined);
           chunks = [];
-          recorder.ondataavailable = (e) => {
-            if (e.data && e.data.size > 0) chunks.push(e.data);
-          };
+          recorder.ondataavailable = (e) => { if (e.data && e.data.size > 0) chunks.push(e.data); };
           recorder.start(250);
         } else {
-          // Fallback: CCapture if MediaRecorder isn't available
           if (typeof CCapture === 'undefined') {
-            isGeneratingMP4 = false;
-            statusDiv.innerHTML = "❌ Your browser can't record video here. Try Chrome/Edge.";
-            dotGrid = originalDotGrid;
-            revealed = originalRevealed;
-            revealOrder = originalRevealOrder;
-            currentRevealCount = originalRevealCount;
-            renderDots();
-            return;
+            throw new Error("CCapture not available");
           }
-
-          capturer = new CCapture({
-            format: 'webm',
-            framerate: fps,
-            quality: 90,
-            name: 'dot_reveal',
-            verbose: false
-          });
+          capturer = new CCapture({ format: 'webm', framerate: fps, quality: 90, name: 'dot_reveal', verbose: false });
           capturer.start();
           capturer.capture(canvas);
         }
 
         const intervalId = setInterval(() => {
-          if (!isGeneratingMP4) {
-            clearInterval(intervalId);
-            return;
-          }
-
+          if (!isGeneratingMP4) { clearInterval(intervalId); return; }
           for (let i = 0; i < dotsPerFrame; i++) {
             if (recordingRevealCount >= totalDots) break;
-            const idx = recordingOrder[recordingRevealCount];
-            revealedRecording[idx] = true;
+            revealedRecording[recordingRevealCount] = true;
             recordingRevealCount++;
           }
-
           ctx.fillStyle = "#03050c";
           ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
           for (let i = 0; i < dotGrid.length; i++) {
@@ -660,14 +735,10 @@
               ctx.fill();
             }
           }
-
           if (capturer) capturer.capture(canvas);
-
           if (recordingRevealCount >= totalDots) {
             clearInterval(intervalId);
-
-            const finalize = async () => {
-              // Restore previous canvas state (original grid and revealed)
+            const finalize = () => {
               dotGrid = originalDotGrid;
               revealed = originalRevealed;
               revealOrder = originalRevealOrder;
@@ -675,66 +746,33 @@
               renderDots();
               isGeneratingMP4 = false;
             };
-
             if (recorder) {
               recorder.addEventListener('stop', async () => {
-                try {
-                  const mimeType = recorder.mimeType || chosenMime || 'video/webm';
-                  const blob = new Blob(chunks, { type: mimeType });
-                  const ext = getExtensionFromMime(mimeType);
-                  const filename = `dot_reveal_${Date.now()}.${ext}`;
-                  const url = URL.createObjectURL(blob);
-
-                  // Try auto-download; also keep a "tap again" fallback for mobile browsers.
-                  setPendingVideoDownload(url, filename);
-                  tryTriggerDownload(url, filename);
-                  statusDiv.innerHTML = "✅ Video ready. If it didn’t download, tap DOWNLOAD again.";
-                } catch (err) {
-                  statusDiv.innerHTML = "❌ Recording finished, but download failed.";
-                  console.error(err);
-                } finally {
-                  await finalize();
-                }
+                const mimeType = recorder.mimeType || chosenMime || 'video/webm';
+                const blob = new Blob(chunks, { type: mimeType });
+                const url = URL.createObjectURL(blob);
+                const filename = `dot_reveal_${Date.now()}.${getExtensionFromMime(mimeType)}`;
+                setPendingVideoDownload(url, filename);
+                tryTriggerDownload(url, filename);
+                statusDiv.innerHTML = "✅ Video ready. If not downloaded, tap DOWNLOAD again.";
+                finalize();
               }, { once: true });
-
-              try {
-                recorder.stop();
-              } catch (err) {
-                statusDiv.innerHTML = "❌ Could not stop recorder.";
-                console.error(err);
+              recorder.stop();
+              if (stream) stream.getTracks().forEach(t => t.stop());
+            } else if (capturer) {
+              capturer.stop();
+              capturer.save((blob) => {
+                const url = URL.createObjectURL(blob);
+                const filename = `dot_reveal_${Date.now()}.webm`;
+                setPendingVideoDownload(url, filename);
+                tryTriggerDownload(url, filename);
+                statusDiv.innerHTML = "✅ Video ready. Tap DOWNLOAD if needed.";
                 finalize();
-              } finally {
-                if (stream) {
-                  try { stream.getTracks().forEach(t => t.stop()); } catch {}
-                }
-              }
-            } else {
-              try {
-                capturer.stop();
-                capturer.save((blob) => {
-                  try {
-                    const url = URL.createObjectURL(blob);
-                    const filename = `dot_reveal_${Date.now()}.webm`;
-                    setPendingVideoDownload(url, filename);
-                    tryTriggerDownload(url, filename);
-                    statusDiv.innerHTML = "✅ Video ready. If it didn’t download, tap DOWNLOAD again.";
-                  } catch (err) {
-                    statusDiv.innerHTML = "❌ Video generated, but download failed.";
-                    console.error(err);
-                  } finally {
-                    finalize();
-                  }
-                });
-              } catch (err) {
-                statusDiv.innerHTML = "❌ Video generation failed.";
-                console.error(err);
-                finalize();
-              }
-            }
+              });
+            } else finalize();
           }
         }, intervalTime);
       } catch (err) {
-        // Ensure we restore state if MediaRecorder fails to start
         isGeneratingMP4 = false;
         statusDiv.innerHTML = "❌ Could not start video recording on this browser.";
         console.error(err);
@@ -743,30 +781,20 @@
         revealOrder = originalRevealOrder;
         currentRevealCount = originalRevealCount;
         renderDots();
-        if (stream) {
-          try { stream.getTracks().forEach(t => t.stop()); } catch {}
-        }
       }
     }
     
-    // ---------- PNG / JPEG export (current frame) ----------
+    // PNG / JPEG export
     function exportPNG() {
-      if (!originalImageData && dotGrid.length === 0) {
-        statusDiv.innerHTML = "⚠️ No image loaded. Upload an image first.";
-        return;
-      }
+      if (!originalImageData && dotGrid.length === 0) { statusDiv.innerHTML = "⚠️ No image loaded."; return; }
       const link = document.createElement('a');
       link.download = `dot_art_${Date.now()}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
       statusDiv.innerHTML = "📸 PNG saved!";
     }
-    
     function exportJPEG() {
-      if (!originalImageData && dotGrid.length === 0) {
-        statusDiv.innerHTML = "⚠️ No image loaded.";
-        return;
-      }
+      if (!originalImageData && dotGrid.length === 0) { statusDiv.innerHTML = "⚠️ No image loaded."; return; }
       const link = document.createElement('a');
       link.download = `dot_art_${Date.now()}.jpg`;
       link.href = canvas.toDataURL('image/jpeg', 0.92);
@@ -774,88 +802,37 @@
       statusDiv.innerHTML = "🖼️ JPEG saved!";
     }
     
-    // ---------- slider events & dynamic update ----------
-    function updateDotSize() {
-      dotSize = parseFloat(dotSizeSlider.value);
-      dotSizeVal.innerText = dotSize;
-      if (!isAnimating && !isGeneratingMP4) renderDots();
-      else if (!isGeneratingMP4) renderDots();
-    }
+    // GitHub STAR: open repo in new tab to star (best practice)
+    starRepoBtn.addEventListener('click', () => {
+      window.open('https://github.com/charlespura/DotMatrixAnimator', '_blank');
+      statusDiv.innerHTML = "⭐ Thanks! Open the repo and click ★ to star.";
+    });
     
-    function updateSpeed() {
-      dotsPerFrame = parseInt(speedSlider.value);
-      speedVal.innerText = dotsPerFrame;
-    }
-    
+    // slider events
+    function updateDotSize() { dotSize = parseFloat(dotSizeSlider.value); dotSizeVal.innerText = dotSize; if (!isAnimating && !isGeneratingMP4) renderDots(); }
+    function updateSpeed() { dotsPerFrame = parseInt(speedSlider.value); speedVal.innerText = dotsPerFrame; }
     function updateStep() {
       const newStep = parseInt(stepSlider.value);
       if (newStep !== step && originalImageData) {
-        step = newStep;
-        stepVal.innerText = step;
+        step = newStep; stepVal.innerText = step;
         dotGrid = buildDotGridFromImageData();
-        if (!isAnimating && !isGeneratingMP4) {
-          resetRevealState();
-        } else if (!isGeneratingMP4) {
-          stopAnimation();
-          resetRevealState();
-        }
+        if (!isAnimating && !isGeneratingMP4) resetRevealState();
+        else if (!isGeneratingMP4) { stopAnimation(); resetRevealState(); }
         statusDiv.innerHTML = `🔄 Spacing updated: ${step}px, ${dotGrid.length} dots.`;
-      } else {
-        step = newStep;
-        stepVal.innerText = step;
-        if (originalImageData && !isGeneratingMP4) {
-          dotGrid = buildDotGridFromImageData();
-          if (!isAnimating) resetRevealState();
-        }
-      }
+      } else { step = newStep; stepVal.innerText = step; if (originalImageData && !isGeneratingMP4) { dotGrid = buildDotGridFromImageData(); if (!isAnimating) resetRevealState(); } }
     }
     
-    // ---------- Event Listeners ----------
-    imgUpload.addEventListener('change', (e) => {
-      if (e.target.files && e.target.files[0]) {
-        if (isGeneratingMP4) {
-          statusDiv.innerHTML = "Please wait, MP4 generation in progress...";
-          return;
-        }
-        clearPendingVideoDownload();
-        stopAnimation();
-        loadAndProcessImage(e.target.files[0]);
-      }
-    });
-    
-    startBtn.addEventListener('click', () => {
-      if (isGeneratingMP4) {
-        statusDiv.innerHTML = "⏳ MP4 generation ongoing, please wait...";
-        return;
-      }
-      clearPendingVideoDownload();
-      startAnimation();
-    });
-    
-    resetBtn.addEventListener('click', () => {
-      if (isGeneratingMP4) {
-        statusDiv.innerHTML = "Cannot reset while generating MP4.";
-        return;
-      }
-      clearPendingVideoDownload();
-      fullReset();
-    });
-    
-    downloadMp4Btn.addEventListener('click', () => {
-      generateAndDownloadMP4();
-    });
-    
+    imgUpload.addEventListener('change', (e) => { if (e.target.files?.[0]) { if (isGeneratingMP4) { statusDiv.innerHTML = "Please wait..."; return; } clearPendingVideoDownload(); stopAnimation(); loadAndProcessImage(e.target.files[0]); } });
+    startBtn.addEventListener('click', () => { if (isGeneratingMP4) { statusDiv.innerHTML = "⏳ MP4 generation ongoing..."; return; } clearPendingVideoDownload(); startAnimation(); });
+    resetBtn.addEventListener('click', () => { if (isGeneratingMP4) { statusDiv.innerHTML = "Cannot reset while generating MP4."; return; } clearPendingVideoDownload(); fullReset(); });
+    downloadMp4Btn.addEventListener('click', () => generateAndDownloadMP4());
     exportPngBtn.addEventListener('click', exportPNG);
     exportJpegBtn.addEventListener('click', exportJPEG);
-    
     dotSizeSlider.addEventListener('input', updateDotSize);
     speedSlider.addEventListener('input', updateSpeed);
     stepSlider.addEventListener('input', updateStep);
     
-    // initialize ui values
-    updateDotSize();
-    updateSpeed();
-    updateStep();
+    updateDotSize(); updateSpeed(); updateStep();
   })();
 </script>
 </body>
