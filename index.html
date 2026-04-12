@@ -218,6 +218,51 @@
       cursor: pointer;
       transition: 0.2s;
       width: 100%;
+      border: 2px dashed rgba(127, 124, 255, 0.3);
+    }
+
+    .file-label.drag-over {
+      background: #2a3553;
+      border-color: #7c96ff;
+      box-shadow: 0 0 12px rgba(124, 150, 255, 0.4), inset 0 0 8px rgba(124, 150, 255, 0.1);
+      transform: scale(1.02);
+    }
+
+    .drop-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 17, 31, 0.85);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      pointer-events: none;
+    }
+
+    .drop-overlay.active {
+      display: flex;
+      pointer-events: auto;
+    }
+
+    .drop-overlay-content {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #7c96ff;
+      text-shadow: 0 0 20px rgba(124, 150, 255, 0.6);
+      animation: float 1.5s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
     }
 
     input[type="file"] {
@@ -301,6 +346,9 @@
   <script src="https://cdn.jsdelivr.net/npm/ccapture.js@1.1.0/build/CCapture.min.js"></script>
 </head>
 <body>
+<div class="drop-overlay" id="dropOverlay">
+  <div class="drop-overlay-content">📥 DROP IMAGE HERE</div>
+</div>
 <div class="glass-container">
   <div class="header-row">
     <div class="title-section">
@@ -862,6 +910,74 @@
     dotSizeSlider.addEventListener('input', updateDotSize);
     speedSlider.addEventListener('input', updateSpeed);
     stepSlider.addEventListener('input', updateStep);
+    
+    // Drag and drop functionality
+    const dropOverlay = document.getElementById('dropOverlay');
+    const fileLabel = document.querySelector('.file-label');
+    
+    function handleDrag(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    
+    function handleDragEnter(e) {
+      handleDrag(e);
+      if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
+        dropOverlay.classList.add('active');
+        fileLabel.classList.add('drag-over');
+      }
+    }
+    
+    function handleDragLeave(e) {
+      handleDrag(e);
+      if (e.target === dropOverlay || e.target === document.body) {
+        dropOverlay.classList.remove('active');
+        fileLabel.classList.remove('drag-over');
+      }
+    }
+    
+    function handleDrop(e) {
+      handleDrag(e);
+      dropOverlay.classList.remove('active');
+      fileLabel.classList.remove('drag-over');
+      
+      const files = e.dataTransfer.files;
+      if (files && files.length > 0) {
+        let imageFile = null;
+        for (let i = 0; i < files.length; i++) {
+          if (files[i].type.startsWith('image/')) {
+            imageFile = files[i];
+            break;
+          }
+        }
+        
+        if (imageFile) {
+          if (isGeneratingMP4) {
+            statusDiv.innerHTML = "⏳ Please wait, MP4 generation in progress...";
+            return;
+          }
+          stopAnimation();
+          loadAndProcessImage(imageFile);
+        } else {
+          statusDiv.innerHTML = "❌ No image found. Drop JPG, PNG, or WEBP files.";
+        }
+      }
+    }
+    
+    // Drag and drop event listeners
+    document.addEventListener('dragover', handleDragEnter, false);
+    document.addEventListener('dragleave', handleDragLeave, false);
+    document.addEventListener('drop', handleDrop, false);
+    
+    // Prevent default drag behavior globally
+    window.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    }, false);
+    window.addEventListener('drop', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    }, false);
     
     // Initialize
     updateDotSize();
